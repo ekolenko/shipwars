@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 
 
+import random
 import socket
 import time
 
@@ -46,12 +47,32 @@ def send_fire(str_in):
     data = mb_client_sock.recv(1024) 
     return bytes.decode(data,'utf-8') == '+'
 
+
+
+def recv_fire():
+    data = mb_client_sock.recv(1024) 
+    print(bytes.decode(data,'utf-8'))
        
+def start_game():
+
+    if player == '1':
+        while True:
+            send_fire(str(random.randint(1,3)))
+            print('fire1')
+            time.sleep(random.randint(1,3))
+            recv_fire()
+    else:
+        while True:
+            recv_fire()
+            time.sleep(random.randint(1,3))
+            send_fire(str(random.randint(1,3)))
+            print('fire2')
+            
 
 
 
 connect_to_host()
 print(player)
 send_field('1 2 3 4 5')
-time.sleep(10)
-send_fire('11')
+
+start_game()

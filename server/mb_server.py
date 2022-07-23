@@ -44,6 +44,7 @@ def check_fire(i):
     
     data = list_connected[i].recv(1024)
     fire_point = bytes.decode(data,'utf-8')
+    list_connected[abs(i - 1)].send(data)
     if fire_point in players_fields[abs(i - 1)]:
         list_connected[i].send(b'+')
     else:
