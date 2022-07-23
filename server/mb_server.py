@@ -40,6 +40,16 @@ def recv_player_fields() -> bool:
         players_fields[i] = bytes.decode(data,'utf-8').split()
         list_connected[i].send(b'ok')
 
+def check_fire(i):
+    
+    data = list_connected[i].recv(1024)
+    fire_point = bytes.decode(data,'utf-8')
+    if fire_point in players_fields[abs(i - 1)]:
+        list_connected[i].send(b'+')
+    else:
+        list_connected[i].send(b'-')
+
+    print(i,fire_point,list_connected[i].ladr)
 
 
 
@@ -64,3 +74,7 @@ connect_players()
 recv_player_fields()
 
 print(players_fields)
+
+while True:
+    for i in range(2):
+        check_fire(i)

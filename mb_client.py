@@ -37,6 +37,18 @@ def send_field(str_in):
         # меняем на отправлено
         return True
 
+
+
+def send_fire(str_in):
+    mb_client_sock.send(bytes(str_in,'utf-8'))
+
+    data = mb_client_sock.recv(1024) 
+    return bytes.decode(data,'utf-8') == '+'
+
+       
+
+
+
 connect_to_host()
 print(player)
 send_field('1 2 3 4 5')
