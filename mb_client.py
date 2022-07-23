@@ -2,6 +2,7 @@
 
 
 import socket
+import time
 
 mb_client_sock = None
 player = None
@@ -52,3 +53,5 @@ def send_fire(str_in):
 connect_to_host()
 print(player)
 send_field('1 2 3 4 5')
+time.sleep(10)
+send_fire('11')

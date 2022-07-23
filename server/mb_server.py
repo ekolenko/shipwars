@@ -49,7 +49,7 @@ def check_fire(i):
     else:
         list_connected[i].send(b'-')
 
-    print(i,fire_point,list_connected[i].ladr)
+    print(i,fire_point)
 
 
 
