@@ -62,3 +62,5 @@ def connect_players():
 connect_players()
 
 recv_player_fields()
+
+print(players_fields)
