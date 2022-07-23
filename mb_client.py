@@ -7,6 +7,8 @@ import time
 
 mb_client_sock = None
 player = None
+my_field = set()
+enemy_field = set()
 
 
 def connect_to_host():
@@ -41,38 +43,69 @@ def send_field(str_in):
 
 
 
-def send_fire(str_in):
+def send_fire(str_in: str) -> str:
     mb_client_sock.send(bytes(str_in,'utf-8'))
 
     data = mb_client_sock.recv(1024) 
-    return bytes.decode(data,'utf-8') == '+'
+    return bytes.decode(data,'utf-8') 
 
 
 
-def recv_fire():
+def recv_fire() -> str:
     data = mb_client_sock.recv(1024) 
-    print(bytes.decode(data,'utf-8'))
-       
-def start_game():
+    return bytes.decode(data,'utf-8')
 
+
+def check_my_field(fire):
+    if fire in my_field:
+        my_field.remove(fire) 
+        print('Hit')
+    if len(my_field) == 0:
+        return True
+    return False
+
+
+
+def start_game():
+    global enemy_field
     if player == '1':
         while True:
-            send_fire(str(random.randint(1,3)))
-            print('fire1')
-            time.sleep(random.randint(1,3))
-            recv_fire()
+            fire = str(random.randint(0,99))
+            while fire in enemy_field:
+                fire = str(random.randint(0,99))
+            enemy_field.add(fire)
+            if send_fire(fire) == 'w':
+                print('i win')
+                return
+            print('Fire to',fire)
+            # time.sleep()
+            fire = recv_fire()
+            if check_my_field(fire):
+                print('i lose')
+                return
     else:
         while True:
-            recv_fire()
-            time.sleep(random.randint(1,3))
-            send_fire(str(random.randint(1,3)))
-            print('fire2')
+            fire = recv_fire()
+            if check_my_field(fire):
+                print('i lose')
+                return
+            # time.sleep(1)
+            fire = str(random.randint(0,99))
+            while fire in enemy_field:
+                fire = str(random.randint(0,99))
+            enemy_field.add(fire)
+            send_fire(fire)
+            print('Fire to',fire)
             
-
+            
+def random_field():
+    global my_field
+    while len(my_field) < 10:
+        my_field.add(str(random.randint(0,99)))
+    return my_field
 
 
 connect_to_host()
 print(player)
-send_field('1 2 3 4 5')
-
+send_field(' '.join(random_field()))
 start_game()

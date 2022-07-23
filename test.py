@@ -1,3 +1,3 @@
 #!/usr/bin/python3
 
-print(bytes([1,2,3]))
+print(set([1,2,2,3]))
