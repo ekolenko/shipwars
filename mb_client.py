@@ -16,7 +16,7 @@ def connect_to_host():
     global mb_client_sock
     global player
     mb_client_sock = socket.socket()
-    mb_client_sock.connect(('glt.ekolenko.ru',9091))
+    mb_client_sock.connect(('localhost',9091))
 
     # тут сервер возращает строку каким подключился "1" или "2" сразу после подключения
     data = mb_client_sock.recv(1024)
@@ -94,6 +94,7 @@ def start_game():
             while fire in enemy_field:
                 fire = str(random.randint(0,99))
             enemy_field.add(fire)
+            time.sleep(2)
             send_fire(fire)
             print('Fire to',fire)
             
