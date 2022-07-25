@@ -107,12 +107,12 @@ def check_fire(sock_name, str_in) -> str:
                 if len(ship) == 0:
                     players_fields[enemy].remove(ship)
                     if len(players_fields[enemy]) == 0:
-                        players[enemy].send(bytes('08,' + str_in + ',3'))
+                        players[enemy].send(bytes('08,' + str_in + ',3','utf-8'))
                         return '3'
-                    players[enemy].send(bytes('08,' + str_in + ',2'))
+                    players[enemy].send(bytes('08,' + str_in + ',2','utf-8'))
                     return '2'             
                 else: 
-                    players[enemy].send(bytes('08,' + str_in + ',1'))
+                    players[enemy].send(bytes('08,' + str_in + ',1','utf-8'))
                     return '1'
     play_order = abs(play_order - 1)  
     players[enemy].send(bytes('08,' + str_in + ',0'))  
