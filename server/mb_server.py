@@ -156,23 +156,7 @@ def decode_data(sock, data):
                 sock.send(b'06,er')                
 
 
-def check_fire(i):
-    enemy_i = abs(i - 1)
-    data = list_connected[i].recv(1024)
-    fire_point = bytes.decode(data,'utf-8')
-    list_connected[enemy_i].send(data)
-    if fire_point in players_fields[enemy_i]:        
-        players_fields[enemy_i].remove(fire_point)
-        if len(players_fields[enemy_i]) == 0:
-            list_connected[i].send(b'w')
-        else:
-            list_connected[i].send(b'+')
-    else:
-        list_connected[i].send(b'-')
 
-    print(i,fire_point)
-
-    return False
 
 init_socket()
 thread_accept_connect()
