@@ -25,7 +25,6 @@ def init_socket():
     mb_server_sock.bind(('0.0.0.0',9091))
     mb_server_sock.listen(0)
 
-
 def accept_connection():
     while True:
         conn_sock,addr = mb_server_sock.accept()
@@ -170,7 +169,7 @@ print('Accepting connections')
 
 while True:
     if input() == 'q':
-        mp_serv_sock.close()
+        mp_serv_sock.shutdown()
         for elem in list_connected:
             elem.close()
     print(players_fields)
