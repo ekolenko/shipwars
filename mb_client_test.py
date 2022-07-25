@@ -30,7 +30,7 @@ while True:
     sb_sock.send(bytes(str_in, 'utf-8'))
     data_in = sb_sock.recv(1024)
     print(data_in)
-    data_lst = bytes(data_in,'utf-8')
+    data_lst = bytes.decode(data_in,'utf-8').split(',')
     if data_lst[0] == '03' and data_lst[1] != 'er' and data_lst[2] == '0':
         while net_func.receive_fire()[1] != '0':
             pass

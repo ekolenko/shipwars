@@ -196,10 +196,12 @@ thread_accept_connect()
 print('Accepting connections')
 
 while True:
-    if input() == 'q':
-        for elem in list_connected:
-            elem.shutdown()
-            elem.close()
+    if input() == 'c':
+        list_connected = []
+        players_fields = {}
+        players = {}
+        game = []
+
     print(players_fields)
     print()
     print(players)
