@@ -81,8 +81,10 @@ def get_fire(sock, str_in):
 
         sock.send(bytes('03,ok,' + check_fire(sock_name,str_in), 'utf-8'))
 
-        while game[abs(play_order - 1)] == 'bot':
-            check_fire('bot', str(random.randint(1.99)))
+        while game[abs(play_order)] == 'bot':
+            shoot = str(random.randint(1.99))
+            print(shoot, check_fire('bot', shoot))
+            
 
     else:
         sock.send(b'03,er')
@@ -99,7 +101,6 @@ def check_fire(sock_name, str_in) -> str:
     print(enemy)
     for ship in players_fields[enemy]:
         for cell in ship:
-            print(cell)
             if str_in == cell:
                 # print(cell)
                 ship.remove(cell)
