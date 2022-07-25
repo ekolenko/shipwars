@@ -15,8 +15,8 @@ play_order = 0
 
 list_connected = []
 players_fields = {}
-players = []
-game = ()
+players = {}
+game = []
 
 def init_socket():
     global mb_server_sock
