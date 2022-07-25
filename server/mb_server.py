@@ -82,7 +82,7 @@ def get_fire(sock, str_in):
         sock.send(bytes('03,ok,' + check_fire(sock_name,str_in), 'utf-8'))
 
         while game[abs(play_order)] == 'bot':
-            shoot = str(random.randint(1.99))
+            shoot = str(random.randint(1,99))
             print(shoot, check_fire('bot', shoot))
             
 
