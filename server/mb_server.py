@@ -8,9 +8,7 @@ import time
 
 # class myThread
 
-mp_serv_sock = socket.socket()
-mp_serv_sock.bind(('0.0.0.0',9091))
-mp_serv_sock.listen(0)
+mp_serv_sock  = None
 
 player_id = 0
 play_order = 0
