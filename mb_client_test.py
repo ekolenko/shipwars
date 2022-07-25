@@ -6,7 +6,7 @@ import time
 import random
 
 
-sb_sock = net_func.connect_to_host('localhost',9090)
+sb_sock = net_func.connect_to_host('glt.ekolenko.ru',9091)
 
 if net_func.check_connection(sb_sock):
     print('OK')
