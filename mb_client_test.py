@@ -20,11 +20,6 @@ if net_func.send_field(sb_sock,'4:17 27:19 29:21 22 23 24:51:53 63 73:55 65 75:5
 else:
     print('Field error')
 
-if net_func.send_field(sb_sock,'12:13 14 1 4:43 45:23 45 56 67:23 21:56 78 94'):
-    print('Field send')
-else:
-    print('Field error')
-
 
 while True:
     str_in = input()
