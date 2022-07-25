@@ -73,7 +73,7 @@ def get_fire(sock, str_in):
 
     sock_name = sock.getpeername()
 
-    if len(game) < 2:
+    if len(game) < 2 and len(players_fields) < 2:
         sock.send(b'03,er')
         return
 
