@@ -13,12 +13,14 @@ if net_func.check_connection(sb_sock):
 else:
     print('ERROR')
 
-if net_func.send_field(sb_sock,'12:12 13 1 4:43 45:23 45 56 67:23 21:56 78 94'):
+    [[4], [17, 27], [19, 29], [21, 22, 23, 24], [51], [53, 63, 73], [55, 65, 75], [58, 59], [78], [81]]
+
+if net_func.send_field(sb_sock,'4:17 27:19 29:21 22 23 24:51:53 63 73:55 65 75:58 59:78:81'):
     print('Field send')
 else:
     print('Field error')
 
-if net_func.send_field(sb_sock,'12:12 13 1 4:43 45:23 45 56 67:23 21:56 78 94'):
+if net_func.send_field(sb_sock,'12:13 14 1 4:43 45:23 45 56 67:23 21:56 78 94'):
     print('Field send')
 else:
     print('Field error')
