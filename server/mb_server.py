@@ -72,6 +72,10 @@ def get_fire(sock, str_in):
 
     sock_name = sock.getpeername()
 
+    if len(game) < 2:
+        sock.send(b'03,er')
+        return
+
     if play_order == game.index(sock_name):
 
         sock.send(bytes('03,ok,' + check_fire(sock_name,str_in), 'utf-8'))
