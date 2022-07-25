@@ -169,8 +169,8 @@ print('Accepting connections')
 
 while True:
     if input() == 'q':
-        mp_serv_sock.shutdown()
         for elem in list_connected:
+            elem.shutdown()
             elem.close()
     print(players_fields)
     print()
