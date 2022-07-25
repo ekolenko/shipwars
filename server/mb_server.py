@@ -120,7 +120,8 @@ def gen_field(sock_name, str_in):
 
 def gen_game():
     global game
-    
+    global play_order 
+    play_order = 0
     game = list(players.keys())
 
 
