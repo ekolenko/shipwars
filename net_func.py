@@ -24,6 +24,33 @@ def send_fire(sock: socket, str_in: str) -> str:
         return (data_str_lst[1])
 
 
+def start_game(sock) -> bool:
+    
+    sock.send(b'04')
+
+    data = sock.recv(1024) 
+    if bytes.decode(data,'utf-8') == '04,ok':
+        return True
+    else:
+        return False
+
+
+def find_player(sock) -> str:
+
+    sock.send(b'06')
+
+    data = sock.recv(1024) 
+    data_str_lst = bytes.decode(data,'utf-8').split(',')
+
+    if data_str_lst[0] == '06':
+        if (data_str_lst[1]) == 'ok':
+            return data_str_lst[2]
+    else:
+        return False
+
+
+
+
 def connect_to_host(addr: str, port: int) -> socket:
 
     sb_client_sock = socket.socket()
@@ -45,7 +72,8 @@ def check_connection(sock: socket) -> bool:
 
 def disconnect_sock(sock: socket) -> bool:
     
-    sock.send(b'05')
+    if sock != None:
+        sock.send(b'05')
 
     data = sock.recv(1024) 
     if bytes.decode(data,'utf-8') == '05,ok':
