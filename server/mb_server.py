@@ -115,7 +115,7 @@ def check_fire(sock_name, str_in) -> str:
                     # players[enemy].send(bytes('08,' + str_in + ',1','utf-8'))
                     return '1'
     play_order = abs(play_order - 1)  
-    players[enemy].send(bytes('08,' + str_in + ',0'))  
+    # players[enemy].send(bytes('08,' + str_in + ',0'))  
     return '0'
     
     
