@@ -136,7 +136,7 @@ def decode_data(sock, data):
         case '06':
             if len(players) == 2:
                 gen_game()
-                sock.send(bytes('01,ok,' + str(game.index(sock_name)) ,'utf-8'))
+                sock.send(bytes('06,ok,' + str(game.index(sock_name)) ,'utf-8'))
             else:
                 sock.send(b'06,er')                
 
@@ -171,3 +171,4 @@ while True:
     print()
     print(players)
     print()
+    print(game)
