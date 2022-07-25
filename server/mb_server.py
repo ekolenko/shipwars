@@ -168,3 +168,6 @@ while True:
     print(list_connected)
     print()
     print(players_fields)
+    print()
+    print(players)
+    print()
