@@ -23,5 +23,7 @@ if net_func.send_field(sb_sock,'12:12 13 1 4:43 45:23 45 56 67:23 21:56 78 94'):
 else:
     print('Field error')
 
-time.sleep(random.randint(1,5))
+net_func.start_game(sb_sock)
+print(net_func.find_player(sb_sock))
+time.sleep(10)
 net_func.disconnect_sock(sb_sock)

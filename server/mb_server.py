@@ -165,8 +165,8 @@ print('Accepting connections')
 
 while True:
     time.sleep(5)
-    print(list_connected)
-    print()
+    # print(list_connected)
+    # print()
     print(players_fields)
     print()
     print(players)
