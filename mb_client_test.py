@@ -31,3 +31,4 @@ while True:
     # time.sleep(15)
     # net_func.disconnect_sock(sb_sock)
     sb_sock.send(bytes(str_in, 'utf-8'))
+    print(sb_sock.recv(1024))

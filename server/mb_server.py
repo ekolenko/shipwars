@@ -15,7 +15,7 @@ play_order = 0
 
 list_connected = []
 players_fields = {}
-players = {}
+players = []
 game = ()
 
 def init_socket():
@@ -104,7 +104,7 @@ def gen_field(sock_name, str_in):
 def gen_game():
     global game
     
-    game = tuple(players.values())
+    game = list(players.keys())
 
 
 def add_to_players(sock):
