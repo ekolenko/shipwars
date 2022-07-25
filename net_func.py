@@ -41,10 +41,11 @@ def find_player(sock) -> str:
 
     data = sock.recv(1024) 
     data_str_lst = bytes.decode(data,'utf-8').split(',')
-
+   
     if data_str_lst[0] == '06':
         if (data_str_lst[1]) == 'ok':
             return data_str_lst[2]
+        return False
     else:
         return False
 
