@@ -1,28 +1,8 @@
 #!/usr/bin/python3
 
-import threading
-import time
+def gen_field(str_in):
+    list_1 =  [step.split(' ') for step in str_in.split(':')]
+    print(list_1)
+    return list_1
 
-my_str=''
-
-def qwerty():
-    global my_str
-    print(threading.current_thread().__getattribute__('name') + ' started')
-    time.sleep(1)
-    my_str += threading.current_thread().__getattribute__('name')
-
-
-for i in range (10):
-    my_thread = threading.Thread(None,qwerty,str(i))
-    my_thread.start()
-
-
-
-
-
-print(threading.active_count())
-print(threading.current_thread())
-
-time.sleep(5)
-
-print(my_str)
+gen_field('12:12 13 1 4:43 45:23 45 56 67:23 21:56 78 94')

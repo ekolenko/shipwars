@@ -1,31 +1,27 @@
 #!/usr/bin/python3
 
 
-import socket
+import net_func
+import time
+import random
 
 
-player = None
+sb_sock = net_func.connect_to_host('localhost',9090)
 
-mb_client_sock = socket.socket()
-mb_client_sock.connect(('glt.ekolenko.ru',9091))
+if net_func.check_connection(sb_sock):
+    print('OK')
+else:
+    print('ERROR')
 
+if net_func.send_field(sb_sock,'12:12 13 1 4:43 45:23 45 56 67:23 21:56 78 94'):
+    print('Field send')
+else:
+    print('Field error')
 
-def connect_to_host():
-    data = mb_client_sock.recv(1024)
-    bytes.decode(data,'utf-8') 
-    data = mb_client_sock.recv(1024)
-    print(str(data))
+if net_func.send_field(sb_sock,'12:12 13 1 4:43 45:23 45 56 67:23 21:56 78 94'):
+    print('Field send')
+else:
+    print('Field error')
 
-
-def send_field(str_in):
-    mb_client_sock.send(bytes(str_in,'utf-8'))
-
-    data = mb_client_sock.recv(1024) 
-    if bytes.decode(data,'utf-8') == 'ok':
-
-        # меняем на отправлено
-        return True
-
-connect_to_host()
-print(player)
-send_field('11 12 13 14 15')
+time.sleep(random.randint(1,5))
+net_func.disconnect_sock(sb_sock)
