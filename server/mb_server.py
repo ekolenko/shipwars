@@ -62,7 +62,7 @@ def thread_accept_connect():
 def get_field(sock, str):
     
     sock_name = sock.getpeername()    
-    if sock_name not in fields.keys():
+    if sock_name not in players_fields.keys():
 
         gen_field(sock_name, str)
         sock.send(b'02,ok')
@@ -169,4 +169,4 @@ while True:
     time.sleep(5)
     print(list_connected)
     print()
-    print(fields)
+    print(players_fields)
