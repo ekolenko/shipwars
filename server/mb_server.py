@@ -145,8 +145,9 @@ def decode_data(sock, data):
         case '05':
             sock.send(b'05,ok')
             if sock_name in players.keys():
-                game.remove(sock_name)
                 del players[sock_name]
+            if  sock_name in game:
+                game.remove(sock_name)
             sock.close()
         case '06':
             if len(players) == 2:
