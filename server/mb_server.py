@@ -4,6 +4,7 @@
 import socket
 import threading
 import time
+import random
 
 
 # class myThread
@@ -80,6 +81,9 @@ def get_fire(sock, str_in):
 
         sock.send(bytes('03,ok,' + check_fire(sock_name,str_in), 'utf-8'))
 
+        if game[abs(play_order - 1)] == 'bot':
+            check_fire('bot', str(random.randint(1.99)))
+
     else:
         sock.send(b'03,er')
     #  pass
@@ -129,6 +133,13 @@ def gen_game():
     game = list(players.keys())
 
 
+def gen_bot_game(sock_name):
+    global game
+    game = []
+    game.append(sock_name)
+    game.append('bot')
+
+
 def add_to_players(sock):
     global players
     global player_id
@@ -165,6 +176,9 @@ def decode_data(sock, data):
                 sock.send(bytes('06,ok,' + str(game.index(sock_name)) ,'utf-8'))
             else:
                 sock.send(b'06,er')   
+        case '07':
+            gen_bot_game()
+            sock.send(b'07,ok')   
         case __:
             sock.send(b'error')            
 
