@@ -166,9 +166,9 @@ thread_accept_connect()
 print('Accepting connections')
 
 while True:
-    time.sleep(5)
-    # print(list_connected)
-    # print()
+    if input() == 'q':
+        for elem in list_connected:
+            elem.close()
     print(players_fields)
     print()
     print(players)
@@ -176,3 +176,6 @@ while True:
     print(game)
     print()
     print(play_order)
+
+
+
