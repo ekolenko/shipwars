@@ -86,13 +86,14 @@ def get_fire(sock, str_in):
 def check_fire(sock_name, str_in) -> str:
 
     global play_order
-    print(str_in)
-
-    for ship in players_fields[players[game[abs(play_order - 1)]]]:
+    # print(str_in)
+    enemy = game[abs(play_order - 1)]
+    print(enemy)
+    for ship in players_fields[sock_name]:
         for cell in ship:
             print(cell)
             if str_in == cell:
-                print(cell)
+                # print(cell)
                 ship.remove(cell)
                 if len(ship) == 0:
                     players_fields[sock_name].remove(ship)
