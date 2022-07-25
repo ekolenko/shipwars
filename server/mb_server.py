@@ -138,6 +138,7 @@ def gen_bot_game(sock_name):
     game = []
     game.append(sock_name)
     game.append('bot')
+    players_fields['bot'] = [['4'], ['17', '27'], ['19', '29'], ['21', '22', '23', '24'], ['51'], ['53', '63', '73'], ['55', '65', '75'], ['58', '59'], ['78'], ['81']]
 
 
 def add_to_players(sock):
