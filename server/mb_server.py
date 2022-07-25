@@ -88,7 +88,7 @@ def check_fire(sock_name, str_in) -> str:
     global play_order
     print(str_in)
 
-    for ship in players_fields[players[abs(play_order - 1)]]:
+    for ship in players_fields[players[game[abs(play_order - 1)]]]:
         for cell in ship:
             print(cell)
             if str_in == cell:
