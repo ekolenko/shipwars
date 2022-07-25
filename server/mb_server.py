@@ -69,13 +69,13 @@ def get_field(sock, str):
 
 def get_fire(sock, str_in):
     global players_fields
-    global game_orde
+    global play_order
 
     sock_name = sock.getpeername()
 
     if play_order == game.index(sock_name):
 
-        check_fire()
+        sock.send(bytes('03,ok,' + check_fire(sock_name,str_in), 'utf-8'))
 
     else:
         sock.send(b'03,er')
@@ -84,13 +84,27 @@ def get_fire(sock, str_in):
     # sock.send(b'03,' + check_fire(sock_name, str_in))
 
 
-def check_fire(sock_name, str_in):
+def check_fire(sock_name, str_in) -> str:
 
     global play_order
 
-    pass
+    for ship in players_fields[sock_name]:
+        for cell in ship:
+            if str_in == cell:
+                ship.remove(cell)
+                if len(ship) == 0:
+                    players_fields[sock_name].remove(ship)
+                    if len(players_fields[sock_name]) == 0:
+                        return '3'
+                    return '2'             
+                else: 
+                    return '1'
+    play_order = abs(play_order - 1)    
+    return '0'
+    
+    
 
-    play_order = abs(play_order - 1)
+    
 
 def gen_field(sock_name, str_in):
 
