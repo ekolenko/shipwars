@@ -178,7 +178,7 @@ def decode_data(sock, data):
             else:
                 sock.send(b'06,er')   
         case '07':
-            gen_bot_game()
+            gen_bot_game(sock_name)
             sock.send(b'07,ok')   
         case __:
             sock.send(b'error')            
