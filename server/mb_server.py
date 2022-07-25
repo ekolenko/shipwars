@@ -159,7 +159,9 @@ def decode_data(sock, data):
                 gen_game()
                 sock.send(bytes('06,ok,' + str(game.index(sock_name)) ,'utf-8'))
             else:
-                sock.send(b'06,er')                
+                sock.send(b'06,er')   
+        case __:
+            sock.send(b'error')            
 
 
 
