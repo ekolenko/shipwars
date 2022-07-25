@@ -171,4 +171,5 @@ while True:
     print(players)
     print()
     print(game)
+    print()
     print(play_order)
