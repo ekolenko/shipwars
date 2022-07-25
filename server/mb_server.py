@@ -110,7 +110,7 @@ def gen_field(sock_name, str_in):
 
     global players_fields
 
-    res_list =  [step.split(':') for step in str_in.split(' ')]
+    res_list =  [step.split(' ') for step in str_in.split(':')]
 
     players_fields[sock_name] = res_list
 
