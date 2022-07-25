@@ -92,3 +92,27 @@ def disconnect_sock(sock: socket) -> bool:
         return True
     else:
         return False
+
+def start_bot(sock: socket) -> bool:
+
+    sock.send(b'07')
+
+    data = sock.recv(1024) 
+    print(data)
+    if bytes.decode(data,'utf-8') == '07,ok':
+        return True
+    else:
+        return False
+        
+
+def receive_fire(sock):
+
+    data = sock.recv(1024)
+    print(data)
+    
+    data_str_lst = bytes.decode(data,'utf-8').split(',')
+
+    if data_str_lst[0] == '08':    
+        return data_str_lst[1:2]
+
+    return False
