@@ -24,7 +24,7 @@ def init_socket():
     global mb_server_sock
 
     mb_server_sock = socket.socket()
-    mb_server_sock.bind(('0.0.0.0',9090))
+    mb_server_sock.bind(('localhost',9090))
     mb_server_sock.listen(0)
 
 

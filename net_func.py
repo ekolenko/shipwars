@@ -1,5 +1,6 @@
 
 import socket
+import threading
 
 
 def send_field(sock: socket, str_in: str) -> bool:
@@ -105,14 +106,34 @@ def start_bot(sock: socket) -> bool:
         return False
         
 
-def receive_fire(sock):
+def receive_fire(sock, butnobj, gameobj):
 
-    data = sock.recv(1024)
-    print(data)
-    
-    data_str_lst = bytes.decode(data,'utf-8').split(',')
+    def listen_data(sock, butnobj,gameobj):
+        print('im a thread')
+        print(gameobj.enemy_round)
+        print(gameobj.listen_sock)
+        gameobj.listen_sock = True
+        butnobj['text'] = 'Ход врага'
+        data = sock.recv(1024)
+        print(data)
 
-    if data_str_lst[0] == '08':    
-        return data_str_lst[1:2]
-
-    return False
+        data_str_lst = bytes.decode(data,'utf-8').split(',')
+        while data_str_lst[2] != '0':
+            data = sock.recv(1024)
+            print(data)
+            data_str_lst = bytes.decode(data,'utf-8').split(',')
+            gameobj.enemy_round = True
+            butnobj['text'] = 'Ход врага'
+        else:
+            gameobj.listen_sock = False
+            gameobj.enemy_round = False
+        
+        butnobj['text'] = 'Твой ход'
+    if not gameobj.listen_sock:
+        thread = threading.Thread(target=listen_data,name='listen_data',args=(sock,butnobj,gameobj))
+        thread.start()
+        print('thread started')
+    else:
+        print('Already listen')
+        print(threading.active_count())
+   

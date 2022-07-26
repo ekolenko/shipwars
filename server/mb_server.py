@@ -43,7 +43,10 @@ def data_transfer(sock):
             sock.close()
 
         else:
-            decode_data(sock, data)
+            try:
+                decode_data(sock, data)
+            except:
+                pass
 
 
 def start_data_transfer(socket, addr):
@@ -107,15 +110,15 @@ def check_fire(sock_name, str_in) -> str:
                 if len(ship) == 0:
                     players_fields[enemy].remove(ship)
                     if len(players_fields[enemy]) == 0:
-                        # players[enemy].send(bytes('08,' + str_in + ',3','utf-8'))
+                        players[enemy].send(bytes('08,' + str_in + ',3','utf-8'))
                         return '3'
-                    # players[enemy].send(bytes('08,' + str_in + ',2','utf-8'))
+                    players[enemy].send(bytes('08,' + str_in + ',2','utf-8'))
                     return '2'             
                 else: 
-                    # players[enemy].send(bytes('08,' + str_in + ',1','utf-8'))
+                    players[enemy].send(bytes('08,' + str_in + ',1','utf-8'))
                     return '1'
     play_order = abs(play_order - 1)  
-    # players[enemy].send(bytes('08,' + str_in + ',0','utf-8'))  
+    players[enemy].send(bytes('08,' + str_in + ',0','utf-8'))  
     return '0'
     
     
@@ -175,7 +178,7 @@ def decode_data(sock, data):
                 game.remove(sock_name)
             if sock_name in players_fields.keys():
                 del players_fields[sock_name]
-            sock.close()
+            sock.shutdown()
         case '06':
             if len(players) == 2:
                 gen_game()
