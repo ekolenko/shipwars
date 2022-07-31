@@ -44,7 +44,7 @@ def data_transfer(sock):
 
         else:
             try:
-                decode_data(sock, data)
+                decode_data_b(sock, data)
             except:
                 pass
 
