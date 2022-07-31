@@ -70,6 +70,29 @@ def get_field(sock, str):
     else:
         sock.send(b'02,er')
 
+
+def get_field(sock, str):
+    
+    sock_name = sock.getpeername()    
+    if sock_name not in players_fields.keys():
+
+        gen_field(sock_name, str)
+        sock.send(b'02,ok')
+    else:
+        sock.send(b'02,er')
+
+def get_field_b(sock, data):
+    
+    sock_name = sock.getpeername()    
+    if sock_name not in players_fields.keys():
+
+        # gen_field(sock_name, str)
+        print(data)
+        sock.send(bytes((2,0)))
+    else:
+        sock.send(bytes((2,1)))
+
+
 def get_fire(sock, str_in):
     global players_fields
     global play_order
@@ -134,6 +157,8 @@ def gen_field(sock_name, str_in):
     players_fields[sock_name] = res_list
 
 
+
+
 def gen_game():
     global game
     global play_order 
@@ -158,7 +183,10 @@ def add_to_players(sock):
 
 
 def decode_data(sock, data):
-    command_data = bytes.decode(data,'utf-8').split(',')
+    try:
+        command_data = bytes.decode(data,'utf-8').split(',')
+    except:
+        command_data = ''
     sock_name = sock.getpeername()
     match command_data[0]:
         case '01':
@@ -190,6 +218,38 @@ def decode_data(sock, data):
             sock.send(b'07,ok')   
         case __:
             sock.send(b'error')            
+
+
+def decode_data_b(sock, data):
+    sock_name = sock.getpeername()
+    match data[0]:
+        case 1:
+            sock.send(bytes((1,0)))
+        case 2:
+            get_field_b(sock, data) 
+        case 3:
+            get_fire(sock, data)
+        case 4:
+            add_to_players(sock)
+            sock.send(bytes((4,0)))
+        case 5:
+            sock.send(bytes((5,0)))
+            if sock_name in players.keys():
+                del players[sock_name]
+            if  sock_name in game:
+                game.remove(sock_name)
+            if sock_name in players_fields.keys():
+                del players_fields[sock_name]
+        case 6:
+            if len(players) == 2:
+                gen_game()
+                sock.send(bytes((6,0)) + bytes((game.index(sock_name),)))
+            else:
+                sock.send(bytes((6,1)))
+        # case 7:
+        #     print(data, '7')  
+        case __:
+            sock.send(bytes((0,)))          
 
 
 
