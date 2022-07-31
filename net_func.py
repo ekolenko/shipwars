@@ -10,7 +10,9 @@ def send_field(sock: socket, ships_data: list) -> bool:
 
     for elem in ships_data:
         data_to_send += bytes(elem)
-
+    
+    sock.send(sock,data_to_send)
+    
     data = sock.recv(1024) 
     print(data)
     if data == bytes((2,0)):
