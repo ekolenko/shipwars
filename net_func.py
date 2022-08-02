@@ -10,9 +10,9 @@ def send_field(sock: socket, ships_data: list) -> bool:
 
     for elem in ships_data:
         data_to_send += bytes(elem)
+
     
-    sock.send(sock,data_to_send)
-    
+
     data = sock.recv(1024) 
     print(data)
     if data == bytes((2,0)):
@@ -21,7 +21,7 @@ def send_field(sock: socket, ships_data: list) -> bool:
         return False
 
 
-def send_fire(sock: socket, coords: tuple) -> str: # возвращает 0 - мимо, 1 - попал, 2 - потопил, 3 - победил
+def send_fire(sock: socket, coords: tuple) -> tuple: # возвращает 0 - мимо, 1 - попал, 2 - потопил, 3 - победил
 
     sock.send(bytes((3,coords[0],coords[1])))
 
@@ -30,7 +30,7 @@ def send_fire(sock: socket, coords: tuple) -> str: # возвращает 0 - м
      
     if data[0] == 3:
         if data[1] == 0:
-            return data[2]
+            return tuple(data[2:])
         else: 
             return False
         
@@ -49,7 +49,7 @@ def start_game(sock) -> bool:
         return False
 
 
-def find_player(sock) -> str:
+def find_player(sock, view_obj, gameobj) -> str:
 
     sock.send(bytes((6,)))
 
@@ -58,6 +58,9 @@ def find_player(sock) -> str:
        
     if data[0] == 6:
         if (data[1]) == 0:
+
+            wait_game(sock, view_obj, gameobj)
+
             return data[2]
         return False
     else:
@@ -99,46 +102,62 @@ def disconnect_sock(sock: socket) -> bool:
     else:
         return False
 
-# def start_bot(sock: socket) -> bool:
 
-#     sock.send(b'07')
 
-#     data = sock.recv(1024) 
-#     print(data)
-#     if bytes.decode(data,'utf-8') == '07,ok':
-#         return True
-#     else:
-#         return False
-        
+def receive_fire(sock, view_obj, gameobj):
 
-def receive_fire(sock, butnobj, gameobj):
-
-    def listen_data(sock, butnobj,gameobj):
-        print('im a thread')
-        print(gameobj.enemy_round)
-        print(gameobj.listen_sock)
+    def listen_data(sock, view_obj,gameobj):
+        # print('im a thread')
+        # print(gameobj.enemy_round)
+        # print(gameobj.listen_sock)
         gameobj.listen_sock = True
-        butnobj['text'] = 'Ход врага'
+        view_obj['text'] = 'Ход врага'
         data = sock.recv(1024)
-        print(data)
+        # print(data)
 
-        data_str_lst = bytes.decode(data,'utf-8').split(',')
-        while data_str_lst[2] != '0':
+        while data[1] == 1 or data[1] == 2:
             data = sock.recv(1024)
-            print(data)
-            data_str_lst = bytes.decode(data,'utf-8').split(',')
+            # print(data)
             gameobj.enemy_round = True
-            butnobj['text'] = 'Ход врага'
-        else:
-            gameobj.listen_sock = False
-            gameobj.enemy_round = False
+            view_obj['text'] = 'Ход врага'
         
-        butnobj['text'] = 'Твой ход'
+        gameobj.listen_sock = False
+        gameobj.enemy_round = False
+        if data[1] == 3:
+            view_obj['text'] = 'Ты проиграл'
+        else:     
+            view_obj['text'] = 'Твой ход'
+
     if not gameobj.listen_sock:
-        thread = threading.Thread(target=listen_data,name='listen_data',args=(sock,butnobj,gameobj))
+        thread = threading.Thread(target=listen_data,name='listen_data',args=(sock,view_obj,gameobj))
         thread.start()
-        print('thread started')
+        # print('Thread started')
     else:
-        print('Already listen')
-        print(threading.active_count())
+        # print('Already listen')
+        # print(threading.active_count())
+        pass
    
+
+def wait_game(sock, view_obj, gameobj):
+
+    def listen_data(sock, view_obj,gameobj):
+        # print('im a thread')
+        # print(gameobj.enemy_round)
+        # print(gameobj.listen_sock)
+        gameobj.listen_sock = True
+        view_obj['text'] = 'Поиск игры'
+        data = sock.recv(1024)
+        # print(data)
+        if data[0] == 7:
+            gameobj.id = data[1]
+            view_obj['text'] = 'Игра началась'
+            return not data[2]
+
+    if not gameobj.listen_sock:
+        thread = threading.Thread(target=listen_data,name='listen_data',args=(sock,view_obj,gameobj))
+        thread.start()
+        # print('Thread started')
+    else:
+        # print('Already listen')
+        # print(threading.active_count())
+        pass
