@@ -2,7 +2,7 @@
 
 import server.server as server
 
-srv = server.SB_server('0.0.0.0',9092)
+srv = server.SB_server('0.0.0.0',9091)
 srv.init_sock()
 srv.thread_accept_con()
 srv.thread_create_game()

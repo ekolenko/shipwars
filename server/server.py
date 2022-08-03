@@ -127,12 +127,31 @@ class SB_server():
                 self.players_status[sock_name] = 0
                 sock.send(bytes((4,0)))
             case 5:
-                sock.send(bytes((5,0)))
+                
+                game_id = data[1]
+                print(game_id)
+                if sock_name in self.players_ships.keys():
+                    del self.players_ships[sock_name]
+                
+                if sock_name in self.players_fields.keys():
+                    del self.players_fields[sock_name]
+
                 if sock_name in self.players_status.keys():
                     del self.players_status[sock_name]
                 
-                # to do
+                if sock_name in self.sock_con.keys():
+                    del self.sock_con[sock_name]
 
+                if game_id > 0:
+                    
+                    try:
+                        enemy_player_sock = self.sock_con[self.games[game_id].enemy[sock_name]]
+                    # to do
+                        enemy_player_sock.send(bytes((9,)))
+                    except:
+                        pass
+
+                sock.send(bytes((5,0)))
                 sock.shutdown()
                 sock.close()
             case 6:
